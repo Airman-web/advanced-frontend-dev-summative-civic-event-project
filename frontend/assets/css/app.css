@@ -1,0 +1,147 @@
+/*
+ * CivicEvents component styles.
+ * Tailwind utilities handle layout; this file defines the small set of
+ * reusable components (buttons, inputs, cards, badges, switches, dialogs).
+ */
+:root {
+  --brand-50: #eef4ff;
+  --brand-100: #dbe6fe;
+  --brand-500: #3b6ef6;
+  --brand-600: #2552eb;
+  --brand-700: #1d3fd8;
+  --ink: #0f172a;
+  --muted: #475569;
+  --line: #e2e8f0;
+  --danger: #dc2626;
+  --danger-700: #b91c1c;
+  --ring: 0 0 0 3px rgb(37 82 235 / 0.3);
+}
+
+html { scroll-behavior: smooth; }
+body.ce-booting #main { visibility: hidden; }
+#main:focus { outline: none; }
+:focus-visible { outline: 3px solid var(--brand-500); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  border: 1px solid transparent; border-radius: 0.625rem;
+  padding: 0.55rem 1rem; font-size: 0.875rem; font-weight: 600; line-height: 1.25rem;
+  white-space: nowrap; cursor: pointer;
+  transition: background-color 0.15s, color 0.15s, box-shadow 0.15s, transform 0.05s;
+}
+.btn:active:not(:disabled) { transform: translateY(1px); }
+.btn:disabled { opacity: 0.55; cursor: not-allowed; }
+.btn-sm { padding: 0.35rem 0.7rem; font-size: 0.8125rem; }
+.btn-icon { padding: 0.5rem; border-radius: 9999px; }
+.btn-primary { background: var(--brand-600); color: #fff; }
+.btn-primary:hover:not(:disabled) { background: var(--brand-700); }
+.btn-secondary { background: #fff; color: var(--ink); border-color: #cbd5e1; }
+.btn-secondary:hover:not(:disabled) { background: #f8fafc; border-color: #94a3b8; }
+.btn-danger { background: var(--danger); color: #fff; }
+.btn-danger:hover:not(:disabled) { background: var(--danger-700); }
+.btn-ghost { background: transparent; color: var(--muted); }
+.btn-ghost:hover:not(:disabled) { background: #f1f5f9; color: var(--ink); }
+
+/* ---------- Surfaces ---------- */
+.card {
+  background: #fff; border: 1px solid var(--line); border-radius: 1rem;
+  box-shadow: 0 1px 2px rgb(15 23 42 / 0.04), 0 4px 16px -6px rgb(15 23 42 / 0.08);
+}
+
+/* ---------- Forms ---------- */
+.label { display: block; margin-bottom: 0.375rem; font-size: 0.875rem; font-weight: 600; color: var(--ink); }
+.input {
+  width: 100%; border: 1px solid #cbd5e1; border-radius: 0.625rem; background: #fff;
+  padding: 0.6rem 0.8rem; font-size: 0.9375rem; color: var(--ink);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.input::placeholder { color: #64748b; }
+.input:focus { outline: none; border-color: var(--brand-500); box-shadow: var(--ring); }
+.input[aria-invalid="true"] { border-color: var(--danger); }
+.input[aria-invalid="true"]:focus { box-shadow: 0 0 0 3px rgb(220 38 38 / 0.25); }
+.hint { margin-top: 0.375rem; font-size: 0.8125rem; color: var(--muted); }
+.field-error { margin-top: 0.375rem; font-size: 0.8125rem; font-weight: 500; color: var(--danger-700); }
+
+.dropzone {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem;
+  border: 2px dashed #cbd5e1; border-radius: 0.875rem; background: #f8fafc;
+  padding: 1.75rem 1rem; text-align: center; cursor: pointer; color: var(--muted);
+  transition: border-color 0.15s, background-color 0.15s;
+}
+.dropzone:hover, .dropzone.is-dragging { border-color: var(--brand-500); background: var(--brand-50); }
+input:focus-visible + .dropzone { outline: 3px solid var(--brand-500); outline-offset: 2px; }
+
+/* Accessible switch: a real checkbox with role="switch" */
+.switch { position: relative; display: inline-flex; flex-shrink: 0; width: 2.75rem; height: 1.5rem; }
+.switch input {
+  appearance: none; margin: 0; width: 100%; height: 100%; border-radius: 9999px;
+  background: #94a3b8; cursor: pointer; transition: background-color 0.2s;
+}
+.switch input:checked { background: var(--brand-600); }
+.switch input:disabled { opacity: 0.5; cursor: not-allowed; }
+.switch .knob {
+  position: absolute; top: 3px; left: 3px; width: 1.125rem; height: 1.125rem; border-radius: 9999px;
+  background: #fff; box-shadow: 0 1px 2px rgb(0 0 0 / 0.25); pointer-events: none; transition: transform 0.2s;
+}
+.switch input:checked + .knob { transform: translateX(1.25rem); }
+
+/* Star rating input (radio group, rendered 5 → 1 and reversed visually) */
+.stars-input { display: inline-flex; flex-direction: row-reverse; gap: 0.125rem; }
+.stars-input input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.stars-input label { cursor: pointer; color: #cbd5e1; padding: 0.125rem; border-radius: 0.375rem; transition: color 0.1s, transform 0.1s; }
+.stars-input label:hover { transform: scale(1.1); }
+.stars-input label:hover, .stars-input label:hover ~ label, .stars-input input:checked ~ label { color: #f59e0b; }
+.stars-input input:focus-visible + label { outline: 3px solid var(--brand-500); outline-offset: 1px; }
+
+input[type="range"].range { width: 100%; accent-color: var(--brand-600); cursor: pointer; }
+
+/* ---------- Badges ---------- */
+.badge {
+  display: inline-flex; align-items: center; gap: 0.25rem; border-radius: 9999px;
+  padding: 0.125rem 0.55rem; font-size: 0.75rem; font-weight: 600; line-height: 1.25rem;
+}
+.badge-blue { background: var(--brand-50); color: var(--brand-700); }
+.badge-green { background: #dcfce7; color: #166534; }
+.badge-amber { background: #fef3c7; color: #92400e; }
+.badge-red { background: #fee2e2; color: #991b1b; }
+.badge-gray { background: #f1f5f9; color: #334155; }
+.badge-purple { background: #f3e8ff; color: #6b21a8; }
+
+/* ---------- Loading ---------- */
+.skeleton {
+  border-radius: 0.5rem;
+  background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 37%, #e2e8f0 63%);
+  background-size: 400% 100%;
+  animation: shimmer 1.4s ease infinite;
+}
+@keyframes shimmer { from { background-position: 100% 50%; } to { background-position: 0 50%; } }
+.spinner { animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ---------- Dialogs, drawer & toasts ---------- */
+dialog { color: var(--ink); }
+dialog::backdrop { background: rgb(15 23 42 / 0.5); backdrop-filter: blur(2px); }
+dialog[open] { animation: pop-in 0.18s ease-out; }
+dialog.drawer {
+  margin: 0 0 0 auto; width: min(26rem, 100vw); max-width: 100vw;
+  height: 100dvh; max-height: 100dvh; border-radius: 0;
+}
+dialog.drawer[open] { animation: slide-in 0.22s ease-out; }
+.toast { animation: pop-in 0.2s ease-out; }
+@keyframes pop-in { from { opacity: 0; transform: translateY(8px) scale(0.98); } }
+@keyframes slide-in { from { transform: translateX(100%); } }
+
+/* ---------- Content ---------- */
+.prose-text { white-space: pre-line; overflow-wrap: anywhere; }
+mark { background: #fef08a; color: inherit; border-radius: 2px; padding: 0 1px; }
+video::cue { background: rgb(0 0 0 / 0.78); color: #fff; font-size: 1.05em; line-height: 1.4; }
+.bar { transition: width 0.6s ease, height 0.6s ease; }
