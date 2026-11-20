@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CivicEvents</title>
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+  <noscript>CivicEvents requires JavaScript. Please enable it to continue.</noscript>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/core.js"></script>
+  <script>
+    // Entry point: send signed-in users to their home page, everyone else to login.
+    const user = CE.auth.user();
+    window.location.replace(user ? CE.auth.homeFor(user) : 'login.html');
+  </script>
+</body>
+</html>
