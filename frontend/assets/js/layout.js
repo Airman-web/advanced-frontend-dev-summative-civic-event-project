@@ -411,15 +411,25 @@
       </div>`).trigger('focus');
   }
 
+  /** Decorative city photo under a dark brand overlay, so white text on top keeps AA contrast. */
+  const cityBackdrop = (src) => (src ? `
+    <img src="${src}" alt="" class="absolute inset-0 h-full w-full object-cover" aria-hidden="true">
+    <span class="absolute inset-0 bg-gradient-to-t from-brand-950/95 via-brand-900/75 to-brand-900/40" aria-hidden="true"></span>` : '');
+
+  /** Guest pages: city photo panel (desktop) or banner (mobile), chosen per page via <main data-hero="…">. */
   function renderAuthShell() {
-    $('#main')
+    const $main = $('#main');
+    const backdrop = cityBackdrop($main.data('hero'));
+    $main
       .addClass('flex min-h-screen flex-col items-center justify-center px-4 py-10 sm:px-8')
-      .prepend(`<a href="login.html" class="mb-8 flex items-center gap-2.5 text-xl font-bold lg:hidden">${logo()}${config.appName}</a>`)
+      .prepend(`
+        <a href="login.html" class="relative mb-8 flex h-36 w-full max-w-md items-end overflow-hidden rounded-2xl bg-brand-700 p-5 text-xl font-bold text-white shadow-lg lg:hidden">
+          ${backdrop}<span class="relative flex items-center gap-2.5">${logo()}${config.appName}</span>
+        </a>`)
       .wrap('<div class="lg:grid lg:min-h-screen lg:grid-cols-2"></div>')
       .before(`
         <aside class="relative hidden overflow-hidden bg-brand-700 p-12 text-white lg:flex lg:flex-col lg:justify-between" aria-label="About ${config.appName}">
-          <div class="absolute -right-24 -top-24 h-96 w-96 rounded-full bg-brand-500/40 blur-3xl" aria-hidden="true"></div>
-          <div class="absolute -bottom-32 -left-16 h-96 w-96 rounded-full bg-brand-900/60 blur-3xl" aria-hidden="true"></div>
+          ${backdrop}
           <a href="login.html" class="relative flex items-center gap-3 text-xl font-bold"><span class="grid h-10 w-10 place-items-center rounded-xl bg-white text-brand-700">${icon('pin')}</span>${config.appName}</a>
           <div class="relative max-w-md">
             <h2 class="text-4xl font-bold leading-tight">Your city, in one accessible place.</h2>
