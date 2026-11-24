@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Create or edit an audio announcement.">
+  <title>Announcement editor · CivicEvents Admin</title>
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="assets/css/app.css">
+  <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+  <script src="assets/js/tailwind.config.js"></script>
+</head>
+<body class="ce-booting min-h-screen bg-slate-50 font-sans text-slate-900 antialiased">
+  <main id="main" tabindex="-1">
+    <div class="mb-6">
+      <a href="announcements.html" class="text-sm font-medium text-brand-700 hover:underline">← Back to announcements</a>
+      <h1 class="mt-2 text-2xl font-bold tracking-tight sm:text-3xl" data-title>New announcement</h1>
+      <p class="mt-1 text-slate-600">Creating an announcement sends a notification to every resident.</p>
+    </div>
+
+    <form id="announcement-form" class="card space-y-6 p-6 sm:p-8" novalidate>
+      <div class="field">
+        <label for="title" class="label">Title <span class="text-red-700" aria-hidden="true">*</span></label>
+        <input id="title" name="title" class="input" maxlength="200" required>
+      </div>
+
+      <div class="field" data-audio-field>
+        <span class="label" id="audio-label">Audio recording <span class="text-red-700" aria-hidden="true">*</span></span>
+        <input id="audio" name="audio" type="file" accept=".mp3,.wav,.m4a,.ogg,audio/*" class="sr-only" aria-labelledby="audio-label" aria-describedby="audio-hint">
+        <label for="audio" class="dropzone">
+          <span class="grid h-10 w-10 place-items-center rounded-full bg-white text-brand-600 shadow-sm" data-icon="upload"></span>
+          <span class="text-sm"><span class="font-semibold text-brand-700">Choose an audio file</span> or drag and drop</span>
+          <span id="audio-hint" class="text-xs">MP3, WAV, M4A or OGG · max 5 MB</span>
+        </label>
+        <div id="audio-preview"></div>
+      </div>
+      <div data-current-audio class="hidden"></div>
+
+      <div class="flex items-center justify-between gap-4 rounded-xl bg-slate-50 p-4">
+        <div>
+          <label for="published" class="font-semibold">Published</label>
+          <p id="published-hint" class="text-sm text-slate-600">Turn off to save as a draft only admins can see.</p>
+        </div>
+        <span class="switch"><input id="published" name="published" type="checkbox" role="switch" aria-describedby="published-hint" checked><span class="knob"></span></span>
+      </div>
+
+      <div id="upload-progress" class="hidden"></div>
+
+      <div class="flex flex-wrap justify-end gap-3 border-t border-slate-100 pt-6">
+        <a href="announcements.html" class="btn btn-secondary">Cancel</a>
+        <button type="submit" class="btn btn-primary" data-submit>Publish announcement</button>
+      </div>
+    </form>
+  </main>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/core.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script src="assets/js/pages/admin-announcement-form.js"></script>
+</body>
+</html>
