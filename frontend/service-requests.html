@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Report a city issue and track your service requests.">
+  <title>Service requests · CivicEvents</title>
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="assets/css/app.css">
+  <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+  <script src="assets/js/tailwind.config.js"></script>
+</head>
+<body class="ce-booting min-h-screen bg-slate-50 font-sans text-slate-900 antialiased">
+  <main id="main" tabindex="-1">
+    <div class="mb-6">
+      <h1 class="text-2xl font-bold tracking-tight sm:text-3xl">Service requests</h1>
+      <p class="mt-1 text-slate-600">Report a problem in your area (a pothole, a broken street light, missed bin collection) and follow it until it’s fixed.</p>
+    </div>
+
+    <div class="grid gap-8 lg:grid-cols-[minmax(0,26rem)_minmax(0,1fr)]">
+      <section class="card self-start p-6 lg:sticky lg:top-24" aria-labelledby="report-heading">
+        <h2 id="report-heading" class="text-lg font-semibold">Report an issue</h2>
+        <p class="mt-1 text-sm text-slate-600">The city team reviews every request. You’ll get a notification when its status changes.</p>
+        <form id="request-form" class="mt-5 space-y-4" novalidate>
+          <div class="field">
+            <label for="service_type" class="label">Type of issue <span class="text-red-700" aria-hidden="true">*</span></label>
+            <select id="service_type" name="service_type" class="input" required disabled>
+              <option value="">Loading…</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="title" class="label">Short summary <span class="text-red-700" aria-hidden="true">*</span></label>
+            <input id="title" name="title" class="input" maxlength="120" placeholder="e.g. Large pothole outside No. 12" required>
+          </div>
+          <div class="field">
+            <label for="location" class="label">Location</label>
+            <input id="location" name="location" class="input" maxlength="200" placeholder="Street, landmark or postcode" autocomplete="street-address">
+          </div>
+          <div class="field">
+            <label for="description" class="label">Details <span class="text-red-700" aria-hidden="true">*</span></label>
+            <textarea id="description" name="description" rows="5" maxlength="1000" class="input" aria-describedby="description-count" placeholder="What’s the problem, and since when?" required></textarea>
+            <p id="description-count" class="hint"><span data-count>0</span>/1000 characters</p>
+          </div>
+          <button type="submit" class="btn btn-primary w-full">Submit request</button>
+        </form>
+      </section>
+
+      <section aria-labelledby="mine-heading">
+        <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+          <h2 id="mine-heading" class="text-lg font-semibold">My requests <span class="font-normal text-slate-500" data-total></span></h2>
+          <div class="flex items-center gap-2">
+            <label for="status-filter" class="text-sm font-medium text-slate-600">Status</label>
+            <select id="status-filter" class="input w-auto py-1.5 text-sm">
+              <option value="">All</option>
+              <option value="pending">Pending</option>
+              <option value="in_progress">In progress</option>
+              <option value="resolved">Resolved</option>
+              <option value="rejected">Rejected</option>
+            </select>
+          </div>
+        </div>
+        <div id="request-list" class="grid gap-3" aria-live="polite"></div>
+      </section>
+    </div>
+  </main>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/core.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script src="assets/js/pages/service-requests.js"></script>
+</body>
+</html>
