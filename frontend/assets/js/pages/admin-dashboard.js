@@ -79,7 +79,7 @@ CE.page({ access: 'admin', active: 'admin-dashboard', admin: true }, () => {
     });
   }
 
-  function render(stats) {
+  function render(stats, requests) {
     const users = { total: n(stats.users.total_users), active: n(stats.users.active_users), inactive: n(stats.users.inactive_users) };
     const events = { total: n(stats.events.total_events), upcoming: n(stats.events.upcoming_events), past: n(stats.events.past_events) };
     const unread = notifications.loaded ? notifications.unreadCount() : 0;
@@ -92,7 +92,9 @@ CE.page({ access: 'admin', active: 'admin-dashboard', admin: true }, () => {
       kpi('video', 'Promos', n(stats.promos.total_promos), 'videos uploaded', 'bg-orange-50 text-orange-700'),
       kpi('megaphone', 'Announcements', n(stats.announcements.total_announcements), 'audio updates', 'bg-purple-50 text-purple-700'),
       kpi('star', 'Feedback', n(stats.feedbacks.total_feedback), 'event reviews', 'bg-yellow-50 text-yellow-700'),
-      kpi('checkCircle', 'Active rate', `${users.total ? Math.round((users.active / users.total) * 100) : 0}%`, 'of accounts enabled', 'bg-teal-50 text-teal-700'),
+      requests
+        ? kpi('clipboard', 'Open service requests', requests.filter((r) => ['pending', 'in_progress'].includes(r.status)).length, `${requests.filter((r) => r.status === 'pending').length} awaiting review`, 'bg-teal-50 text-teal-700')
+        : kpi('clipboard', 'Open service requests', '—', 'unavailable', 'bg-teal-50 text-teal-700'),
     ].join(''));
 
     const activity = [
@@ -137,8 +139,9 @@ CE.page({ access: 'admin', active: 'admin-dashboard', admin: true }, () => {
     if (!$('#kpis').children().length) ui.loading($('#kpis'), ui.skeleton.rows(4));
     ui.busy($refresh, true, 'Refreshing…');
     try {
-      const [stats] = await Promise.all([api.get('/dashboard/admin'), notifications.load()]);
-      render(stats);
+      // Service requests are optional: the dashboard still renders if that endpoint fails.
+      const [stats, requests] = await Promise.all([api.get('/dashboard/admin'), api.get('/service-requests').catch(() => null), notifications.load()]);
+      render(stats, requests);
       renderActivity();
       $('#updated').text(`updated ${utils.formatTime(new Date())}`);
     } catch (error) {
