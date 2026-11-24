@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Listen to official city audio announcements.">
+  <title>Announcements · CivicEvents</title>
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="assets/css/app.css">
+  <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+  <script src="assets/js/tailwind.config.js"></script>
+</head>
+<body class="ce-booting min-h-screen bg-slate-50 font-sans text-slate-900 antialiased">
+  <main id="main" tabindex="-1">
+    <div class="mb-6 flex flex-wrap items-end justify-between gap-4">
+      <div>
+        <h1 class="text-2xl font-bold tracking-tight sm:text-3xl">Announcements</h1>
+        <p class="mt-1 text-slate-600">Official audio updates from the city. Press play to listen right here.</p>
+      </div>
+      <a href="admin-announcement-form.html" class="btn btn-primary hidden" data-admin-only>+ New announcement</a>
+    </div>
+
+    <div class="mb-6 max-w-md" role="search">
+      <label for="search" class="sr-only">Search announcements</label>
+      <input id="search" type="search" class="input" placeholder="Search announcements">
+    </div>
+
+    <p id="result-count" class="mb-4 text-sm font-medium text-slate-600" aria-live="polite"></p>
+    <div id="announcement-list" class="grid gap-3"></div>
+    <div id="announcement-pager" class="mt-8"></div>
+  </main>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/core.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script src="assets/js/pages/content-list.js"></script>
+</body>
+</html>
