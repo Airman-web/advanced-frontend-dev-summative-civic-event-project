@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Your CivicEvents notifications.">
+  <title>Notifications · CivicEvents</title>
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="assets/css/app.css">
+  <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+  <script src="assets/js/tailwind.config.js"></script>
+</head>
+<body class="ce-booting min-h-screen bg-slate-50 font-sans text-slate-900 antialiased">
+  <main id="main" tabindex="-1">
+    <div class="mx-auto max-w-3xl">
+      <div class="mb-6 flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <h1 class="text-2xl font-bold tracking-tight sm:text-3xl">Notifications</h1>
+          <p class="mt-1 text-slate-600" id="summary" aria-live="polite">City-wide broadcasts and messages sent to you.</p>
+        </div>
+        <button type="button" class="btn btn-secondary" id="mark-all">Mark all as read</button>
+      </div>
+
+      <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+        <div class="inline-flex rounded-xl bg-slate-200/70 p-1" role="group" aria-label="Filter by read status">
+          <button type="button" class="rounded-lg px-4 py-1.5 text-sm font-semibold" data-filter="all" aria-pressed="true">All</button>
+          <button type="button" class="rounded-lg px-4 py-1.5 text-sm font-semibold" data-filter="unread" aria-pressed="false">Unread</button>
+        </div>
+        <div class="flex items-center gap-2">
+          <label for="type" class="text-sm font-medium text-slate-600">Type</label>
+          <select id="type" class="input w-auto py-1.5 text-sm">
+            <option value="">All types</option>
+            <option value="event">Events</option>
+            <option value="announcement">Announcements</option>
+            <option value="promo">Promos</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="card overflow-hidden">
+        <ul id="notification-list" class="divide-y divide-slate-100"></ul>
+      </div>
+      <div id="notification-pager" class="mt-6"></div>
+    </div>
+  </main>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/core.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script src="assets/js/pages/notifications.js"></script>
+</body>
+</html>
