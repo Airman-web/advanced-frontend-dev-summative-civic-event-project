@@ -19,6 +19,7 @@
     { id: 'events', label: 'Events', href: 'events.html' },
     { id: 'announcements', label: 'Announcements', href: 'announcements.html' },
     { id: 'promos', label: 'Promos', href: 'promos.html' },
+    { id: 'services', label: 'Services', href: 'service-requests.html' },
     // ROLE GUARD (UI): entries flagged `admin` are never rendered for normal users.
     { id: 'admin-dashboard', label: 'Dashboard', href: 'admin-dashboard.html', admin: true },
     { id: 'admin', label: 'Admin', href: 'admin-users.html', admin: true },
@@ -28,6 +29,7 @@
     { group: 'Manage', items: [
       { id: 'admin-dashboard', label: 'Overview', href: 'admin-dashboard.html', icon: 'chart' },
       { id: 'admin-users', label: 'Users', href: 'admin-users.html', icon: 'users' },
+      { id: 'admin-service-requests', label: 'Service requests', href: 'admin-service-requests.html', icon: 'clipboard' },
       { id: 'admin-notifications', label: 'Notifications', href: 'admin-notifications.html', icon: 'bell' },
     ] },
     { group: 'Create', items: [
@@ -51,11 +53,13 @@
     event: ['calendar', 'badge-blue'],
     announcement: ['megaphone', 'badge-purple'],
     promo: ['video', 'badge-amber'],
+    service_request: ['clipboard', 'badge-green'],
   };
   const LINKS = [
     ['event_id', 'event.html', 'View event'],
     ['announcement_id', 'announcement.html', 'Listen to announcement'],
     ['promo_id', 'promo.html', 'Watch promo'],
+    ['service_request_id', 'service-requests.html', 'View your request'],
   ];
 
   const notifications = {
@@ -97,7 +101,7 @@
 
     typeBadge(type) {
       const [, badge] = TYPE_STYLES[type] || ['info', 'badge-gray'];
-      return `<span class="badge ${badge}">${esc(utils.capitalize(type || 'system'))}</span>`;
+      return `<span class="badge ${badge}">${esc(utils.capitalize((type || 'system').replace(/_/g, ' ')))}</span>`;
     },
 
     /** One row in a notification list (drawer or inbox). */
@@ -200,8 +204,9 @@
           <button type="button" id="menu-toggle" class="btn btn-ghost btn-icon lg:hidden" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open main menu">${icon('menu')}</button>
           <a href="${auth.homeFor(user)}" class="mr-2 flex items-center gap-2.5 text-lg font-bold tracking-tight text-slate-900" aria-label="${config.appName} home">${logo()}<span class="hidden sm:inline" aria-hidden="true">${config.appName}</span></a>
           <nav aria-label="Main" class="hidden items-center gap-1 lg:flex">${navLinks(user, active)}</nav>
-          ${searchForm('global-search', 'ml-auto hidden w-full max-w-xs md:block')}
-          <div class="ml-auto flex items-center gap-1 md:ml-2">
+          ${searchForm('global-search', 'ml-auto hidden w-full max-w-xs md:block lg:hidden xl:block')}
+          <div class="ml-auto flex items-center gap-1 md:ml-2 lg:ml-auto xl:ml-2">
+            <a href="search.html" class="btn btn-ghost btn-icon hidden lg:inline-flex xl:hidden" aria-label="Search">${icon('search')}</a>
             <button type="button" id="bell" class="btn btn-ghost btn-icon relative" aria-haspopup="dialog" aria-controls="notif-drawer" aria-label="Notifications">
               ${icon('bell')}
               <span id="bell-count" class="absolute -right-0.5 -top-0.5 hidden min-w-[1.25rem] rounded-full bg-red-600 px-1 text-center text-[11px] font-bold leading-5 text-white ring-2 ring-white" aria-hidden="true"></span>
@@ -221,6 +226,7 @@
                 </div>
                 ${menuItem('profile.html', 'user', 'My profile')}
                 ${menuItem('my-registrations.html', 'ticket', 'My registrations')}
+                ${menuItem('service-requests.html', 'clipboard', 'My service requests')}
                 ${menuItem('notifications.html', 'bell', 'Notifications')}
                 ${user.role === 'admin' ? menuItem('admin-dashboard.html', 'shield', 'Admin panel') : ''}
                 <button type="button" role="menuitem" data-logout class="mt-1 flex w-full items-center gap-3 rounded-lg border-t border-slate-100 px-3 py-2 text-sm text-red-700 hover:bg-red-50 focus:bg-red-50">${icon('logout', 'h-4 w-4')}Sign out</button>
@@ -263,7 +269,7 @@
             <p class="mt-3 text-sm text-slate-600">Your city’s events, audio announcements and service updates — accessible to everyone.</p>
           </div>
           <nav aria-label="Explore"><h2 class="text-sm font-semibold text-slate-900">Explore</h2>
-            <ul class="mt-3 space-y-2 text-sm">${link('events.html', 'Events')}${link('announcements.html', 'Announcements')}${link('promos.html', 'Promos')}${link('my-registrations.html', 'My registrations')}</ul>
+            <ul class="mt-3 space-y-2 text-sm">${link('events.html', 'Events')}${link('announcements.html', 'Announcements')}${link('promos.html', 'Promos')}${link('service-requests.html', 'Report an issue')}${link('my-registrations.html', 'My registrations')}</ul>
           </nav>
           <nav aria-label="Help"><h2 class="text-sm font-semibold text-slate-900">Help &amp; support</h2>
             <ul class="mt-3 space-y-2 text-sm">
