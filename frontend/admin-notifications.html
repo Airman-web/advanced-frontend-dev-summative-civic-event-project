@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Manage notifications.">
+  <title>Notifications · CivicEvents Admin</title>
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="assets/css/app.css">
+  <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+  <script src="assets/js/tailwind.config.js"></script>
+</head>
+<body class="ce-booting min-h-screen bg-slate-50 font-sans text-slate-900 antialiased">
+  <main id="main" tabindex="-1">
+    <div class="mb-6">
+      <h1 class="text-2xl font-bold tracking-tight sm:text-3xl">Manage notifications</h1>
+      <p class="mt-1 text-slate-600">Remove outdated or incorrect notifications for everyone.</p>
+    </div>
+
+    <div class="mb-6 flex gap-3 rounded-xl border border-brand-100 bg-brand-50 p-4 text-sm text-brand-900" role="note">
+      <span data-icon="info" class="text-brand-600"></span>
+      <p>Broadcast notifications are sent automatically when you create an event, announcement or promo, or publish a draft.</p>
+    </div>
+
+    <form id="bulk-form" class="card overflow-hidden" aria-labelledby="table-heading">
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 p-4">
+        <h2 id="table-heading" class="font-semibold">All notifications <span class="font-normal text-slate-500" data-total></span></h2>
+        <div class="flex flex-wrap items-center gap-2">
+          <label for="search" class="sr-only">Search notifications</label>
+          <input id="search" type="search" class="input w-56 py-1.5 text-sm" placeholder="Search title or message">
+          <label for="type" class="sr-only">Filter by type</label>
+          <select id="type" class="input w-auto py-1.5 text-sm">
+            <option value="">All types</option>
+            <option value="event">Events</option>
+            <option value="announcement">Announcements</option>
+            <option value="promo">Promos</option>
+          </select>
+          <button type="submit" class="btn btn-danger btn-sm" data-bulk-delete disabled>Delete selected</button>
+        </div>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm">
+          <thead class="bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
+            <tr>
+              <th scope="col" class="w-10 px-4 py-3"><input type="checkbox" id="select-all" class="h-4 w-4 rounded" aria-label="Select all visible notifications"></th>
+              <th scope="col" class="px-4 py-3">Notification</th>
+              <th scope="col" class="hidden px-4 py-3 md:table-cell">Type</th>
+              <th scope="col" class="hidden px-4 py-3 md:table-cell">Audience</th>
+              <th scope="col" class="px-4 py-3">Sent</th>
+              <th scope="col" class="px-4 py-3"><span class="sr-only">Actions</span></th>
+            </tr>
+          </thead>
+          <tbody id="rows" class="divide-y divide-slate-100"></tbody>
+        </table>
+      </div>
+    </form>
+    <div id="pager" class="mt-6"></div>
+  </main>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/core.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script src="assets/js/pages/admin-notifications.js"></script>
+</body>
+</html>
