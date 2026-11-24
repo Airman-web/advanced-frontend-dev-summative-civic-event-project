@@ -31,10 +31,12 @@ CE.page({ access: 'user', active: 'search' }, () => {
       </section>`;
   }
 
+  $('#page-search').val(query);
+
   async function load() {
     if (!query) {
-      $results.html(ui.empty({ icon: 'search', title: 'What are you looking for?', text: 'Type in the search bar above to find events, announcements and promos.' }));
-      return $('#global-search, #mobile-search').first().trigger('focus');
+      $results.html(ui.empty({ icon: 'search', title: 'What are you looking for?', text: 'Use the search box above to find events, announcements and promos.' }));
+      return $('#page-search').trigger('focus');
     }
     document.title = `“${query}” · Search · CivicEvents`;
     ui.loading($results, ui.skeleton.rows(4));
