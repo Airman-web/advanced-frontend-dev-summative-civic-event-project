@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CivicEvents admin overview.">
+  <title>Dashboard · CivicEvents Admin</title>
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="assets/css/app.css">
+  <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+  <script src="assets/js/tailwind.config.js"></script>
+</head>
+<body class="ce-booting min-h-screen bg-slate-50 font-sans text-slate-900 antialiased">
+  <main id="main" tabindex="-1">
+    <div class="mb-6 flex flex-wrap items-end justify-between gap-4">
+      <div>
+        <h1 class="text-2xl font-bold tracking-tight sm:text-3xl">Dashboard</h1>
+        <p class="mt-1 text-sm text-slate-600" aria-live="polite">Live platform statistics · <span id="updated">loading…</span></p>
+      </div>
+      <button type="button" id="refresh" class="btn btn-secondary">Refresh</button>
+    </div>
+
+    <section aria-labelledby="kpi-heading">
+      <h2 id="kpi-heading" class="sr-only">Key figures</h2>
+      <div id="kpis" class="grid grid-cols-2 gap-4 md:grid-cols-4"></div>
+    </section>
+
+    <div id="charts" class="mt-8 grid gap-6 lg:grid-cols-2"></div>
+
+    <section class="mt-8 grid gap-6 lg:grid-cols-3" aria-label="Shortcuts and activity">
+      <div class="card p-6">
+        <h2 class="font-semibold">Quick actions</h2>
+        <div class="mt-4 grid gap-2">
+          <a href="admin-event-form.html" class="btn btn-secondary justify-start">+ New event</a>
+          <a href="admin-announcement-form.html" class="btn btn-secondary justify-start">+ New announcement</a>
+          <a href="admin-promo-form.html" class="btn btn-secondary justify-start">+ New promo</a>
+          <a href="admin-users.html" class="btn btn-secondary justify-start">Manage users</a>
+        </div>
+      </div>
+      <div class="card p-6 lg:col-span-2">
+        <div class="flex items-center justify-between">
+          <h2 class="font-semibold">Recent activity</h2>
+          <a href="admin-notifications.html" class="text-sm font-semibold text-brand-700 hover:underline">Manage</a>
+        </div>
+        <ul id="activity" class="mt-2 divide-y divide-slate-100"></ul>
+      </div>
+    </section>
+  </main>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/core.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script src="assets/js/pages/admin-dashboard.js"></script>
+</body>
+</html>
