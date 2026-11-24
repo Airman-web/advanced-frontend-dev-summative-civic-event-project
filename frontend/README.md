@@ -51,6 +51,7 @@ The frontend has no `.env` file because it is plain static files. To point it at
 1. **Database.** Create a PostgreSQL database named `civic-events-db` and run the migration:
    ```bash
    psql -U <db-user> -h localhost -d civic-events-db -f backend/migrations/001_create_tables.sql
+   psql -U <db-user> -h localhost -d civic-events-db -f backend/migrations/002_create_service_requests.sql
    ```
 2. **Backend environment.** Edit `backend/.env`:
    ```env
@@ -95,6 +96,7 @@ Sign out and back in after promoting an account, because the role is read at log
 | **User management** (admin) | Search and filter users, view a profile dialog, and enable or disable accounts with an optimistic toggle that rolls back if the request fails. Admins cannot disable their own account. There is deliberately no role editor. |
 | **Profile** | Edit name and email (role and status are read-only and never sent). A 409 email conflict opens a dialog and marks the email field. The header updates immediately. Shows the user's reviews. |
 | **My registrations** | Upcoming / Past / Cancelled tabs (WAI-ARIA tabs with arrow keys), each with a count, and cancel with confirmation. |
+| **Service requests** | Residents report city issues (road repair, sanitation, street lights, etc.) and follow each request's status and the city team's notes. Admins review requests with status tiles and filters, then move them through Pending → In progress → Resolved / Rejected. Every update sends the resident a **targeted** notification that links back to their request. |
 | **Search** | Searches events, announcements and promos together, with highlighted matches. |
 | **UX polish** | Skeleton loaders, toasts (announced through an `aria-live` region), confirmation dialogs, empty states, error states with Retry, a Retry action on network errors, and a "Contact admin" action on 403. Lists are cached for 5 minutes and the cache is cleared after any create, update or delete. |
 | **Accessibility** | Semantic landmarks, one `h1` per page, labels and `aria-describedby` on every field, `aria-invalid` with focus moved to the first error, native `<dialog>` (focus trap and Esc to close), visible focus rings, `prefers-reduced-motion` support, alt text, and WCAG AA colour contrast. |
@@ -110,6 +112,7 @@ frontend/
 ├── announcements.html, announcement.html
 ├── promos.html, promo.html
 ├── notifications.html            Notification inbox
+├── service-requests.html        Report an issue and track your requests
 ├── my-registrations.html, profile.html, search.html
 ├── admin-*.html                  Admin pages (dashboard, users, notifications, editors)
 └── assets/
@@ -147,6 +150,7 @@ The frontend guards exist for UX only. **The backend is the security boundary**:
 | `cards.event()` in [`ui.js`](assets/js/ui.js) and `event.js` | Only normal users see Register/Cancel. Only admins load registrants and the full feedback list (that endpoint is admin-only). |
 | `notifications.remove()` in [`layout.js`](assets/js/layout.js) | Delete controls for notifications are only rendered for admins. |
 | `admin-*.js` | Each admin page boots with `access: 'admin'`. |
+| `serviceRequests.routes.js` (backend) | Residents can only create and read their **own** requests. Listing all requests and changing a status require `authorize(['admin'])`. |
 
 ## Auth & token storage
 
@@ -158,7 +162,24 @@ The frontend guards exist for UX only. **The backend is the security boundary**:
 
 ## Backend constraints and how the UI handles them
 
-The task is frontend-only, so the provided API was not changed. These are its behaviours and how the UI handles each one:
+### Service requests (backend extension)
+
+The rubric lists **service requests**, but the provided API only had a list of service types (`backend/src/utils/serviceTypes.js`) and no endpoints. So I added one small, self-contained backend module. It is purely additive: no existing behaviour changed.
+
+| Method & path | Who | Purpose |
+|---|---|---|
+| `GET /api/service-requests/types` | signed in | The six service types |
+| `POST /api/service-requests` | signed in | Submit a request (`service_type`, `title`, `description`, `location?`) |
+| `GET /api/service-requests/my-requests` | signed in | Your own requests |
+| `GET /api/service-requests/:id` | owner or admin | One request |
+| `GET /api/service-requests` | admin | All requests, with resident name and email |
+| `PATCH /api/service-requests/:id/status` | admin | Set `status` (+ optional `admin_note`) and notify the resident |
+
+Files: `migrations/002_create_service_requests.sql`, `src/models/serviceRequests.model.js`, `src/controllers/serviceRequests.controller.js`, `src/routes/serviceRequests.routes.js`, plus one line in `src/routes/index.routes.js`.
+
+### Behaviours of the provided API
+
+Apart from the module above, the provided API was not changed. These are its behaviours and how the UI handles each one:
 
 | API behaviour | UI handling |
 |---|---|
