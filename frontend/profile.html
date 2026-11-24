@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Your CivicEvents profile.">
+  <title>My profile · CivicEvents</title>
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="assets/css/app.css">
+  <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+  <script src="assets/js/tailwind.config.js"></script>
+</head>
+<body class="ce-booting min-h-screen bg-slate-50 font-sans text-slate-900 antialiased">
+  <main id="main" tabindex="-1">
+    <h1 class="mb-6 text-2xl font-bold tracking-tight sm:text-3xl">My profile</h1>
+    <div class="grid gap-6 lg:grid-cols-[20rem_1fr]">
+      <aside id="profile-card" class="card self-start p-6" aria-label="Account summary"></aside>
+      <div class="space-y-6">
+        <section class="card p-6 sm:p-8" aria-labelledby="edit-heading">
+          <h2 id="edit-heading" class="text-lg font-semibold">Personal details</h2>
+          <p class="mt-1 text-sm text-slate-600">Update your name and email address.</p>
+          <form id="profile-form" class="mt-6 space-y-5" novalidate>
+            <div class="field">
+              <label for="full_name" class="label">Full name</label>
+              <input id="full_name" name="full_name" class="input" autocomplete="name" required disabled>
+            </div>
+            <div class="field">
+              <label for="email" class="label">Email address</label>
+              <input id="email" name="email" type="email" class="input" autocomplete="email" required disabled>
+            </div>
+            <div class="grid gap-5 sm:grid-cols-2">
+              <div>
+                <span class="label">Role</span>
+                <p class="input flex items-center gap-2 bg-slate-50 text-slate-600" id="role-display" aria-describedby="locked-hint"></p>
+              </div>
+              <div>
+                <span class="label">Account status</span>
+                <p class="input flex items-center gap-2 bg-slate-50 text-slate-600" id="status-display" aria-describedby="locked-hint"></p>
+              </div>
+            </div>
+            <p id="locked-hint" class="hint">Role and account status are managed by administrators and can’t be changed here.</p>
+            <div class="flex justify-end gap-3 border-t border-slate-100 pt-5">
+              <button type="reset" class="btn btn-secondary" disabled>Discard changes</button>
+              <button type="submit" class="btn btn-primary" disabled>Save changes</button>
+            </div>
+          </form>
+        </section>
+
+        <section class="card p-6 sm:p-8" aria-labelledby="feedback-heading">
+          <h2 id="feedback-heading" class="text-lg font-semibold">My reviews</h2>
+          <ul id="my-feedback" class="mt-4 divide-y divide-slate-100"></ul>
+        </section>
+      </div>
+    </div>
+  </main>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/core.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script src="assets/js/pages/profile.js"></script>
+</body>
+</html>
